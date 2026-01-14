@@ -2,17 +2,25 @@
 
 > **Automatically like every video on the Hampter channel! 🎥👍**
 
-A Python automation script that uses the YouTube Data API to like all videos from your favorite YouTube channel. Built specifically for showing love to @the_hampter! 💕
+[![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Style: Functional](https://img.shields.io/badge/code%20style-functional-brightgreen.svg)](https://github.com/jpalenchar/HampterLiker)
+
+A Python automation script that uses the YouTube Data API to like all videos from your favorite YouTube channel. Built with functional programming principles, featuring both a beautiful desktop GUI and web interface. Built specifically for showing love to @the_hampter! 💕
 
 ---
 
 ## ✨ Features
 
-- 🔐 Secure OAuth 2.0 authentication
-- 📺 Automatically fetches all videos from a channel
-- 👍 Likes each video with progress tracking
-- 🚀 Simple and easy to use
-- 🐍 Python-based automation
+- 🖥️ **Beautiful Desktop GUI** - Standalone window with no browser needed
+- 🌐 **Web Interface** - Modern web UI with real-time updates
+- 🔐 **Secure OAuth 2.0** - Safe authentication with YouTube
+- 📺 **Auto-fetch** - Automatically gets all videos from any channel
+- 👍 **Progress Tracking** - See exactly what's happening in real-time
+- 🚀 **Easy to Use** - Just enter a channel handle and click start
+- 🐍 **Functional Python** - Clean, well-documented, type-hinted code
+- 📊 **Live Statistics** - Watch total videos and liked count update
+- 🎉 **Success Notifications** - Know when everything is complete
 
 ---
 
@@ -66,18 +74,44 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Step 3: Run the Script 🎬
+### Step 3: Run the Application 🎬
+
+**Option A: Desktop GUI (Recommended) 🖥️**
 
 ```bash
-python username.py
+python gui.py
 ```
 
-**What happens next:**
-1. 🌐 A browser window will open for OAuth authentication
+A beautiful standalone window will open with:
+- 🐹 Cute hamster-themed interface
+- 🎯 Easy channel input
+- 📊 Real-time progress bar
+- 📈 Live statistics
+- 📜 Activity log showing what's happening
+- 🎉 Success notification when complete
+
+**No browser needed! Works completely offline after OAuth.**
+
+**Option B: Web UI 🌐**
+
+```bash
+python app.py
+```
+
+Then open your browser to: **http://localhost:5000**
+
+You'll see a beautiful web interface where you can:
+- 🎯 Enter any YouTube channel handle
+- 📊 Watch real-time progress with a progress bar
+- 📈 See live stats of total videos and liked videos
+- 🎉 Get a celebration when it's done!
+
+**What happens:**
+1. 🌐 A browser window will open for OAuth authentication (one-time)
 2. 🔓 Log in with your Google account and grant permissions
-3. 📊 The script will fetch all videos from @the_hampter
+3. 📊 The app will fetch all videos from the channel
 4. 👍 Each video will be liked automatically
-5. ✅ You'll see progress updates in the console
+5. ✅ You'll see progress updates in real-time
 
 ---
 
@@ -87,8 +121,12 @@ python username.py
 HampterLiker/
 ├── 🐹 README.md              # You are here!
 ├── 📝 requirements.txt       # Python dependencies
-├── 🔧 liker.py              # Core functions (auth, fetch, like)
-├── 🚀 username.py           # Main script
+├── 🖥️  gui.py                # Standalone desktop GUI (NEW! ⭐)
+├── 🌐 app.py                # Flask web UI
+├── ⚙️  config.py             # Configuration management
+├── 🔧 youtube_service.py    # Core YouTube service (functional)
+├── 📂 templates/            # HTML templates
+│   └── index.html           # Beautiful web interface
 ├── 🔑 client_secret_*.json  # Your OAuth credentials
 └── 📂 venv/                 # Virtual environment
 ```
@@ -97,8 +135,11 @@ HampterLiker/
 
 | File | Description |
 |------|-------------|
-| `liker.py` | 🔧 Core functions for authentication, fetching videos, and liking |
-| `username.py` | 🚀 Main script that ties everything together |
+| `gui.py` | 🖥️ **Standalone desktop GUI** with tkinter (no browser needed!) |
+| `app.py` | 🌐 Flask web server with beautiful UI |
+| `config.py` | ⚙️ Immutable configuration with dataclasses |
+| `youtube_service.py` | 🔧 Core YouTube API service (pure functional programming) |
+| `templates/index.html` | 🎨 Web interface with progress tracking |
 | `requirements.txt` | 📦 Python package dependencies |
 | `client_secret_*.json` | 🔑 Your OAuth 2.0 credentials from Google |
 
@@ -163,17 +204,34 @@ This error occurs when the OAuth client ID has been deleted from your Google Clo
 #### "Invalid grant: account not found"
 - **Solution:** Make sure you're logging in with the correct Google account
 
+#### "macOS 15 (1507) or later required" / tkinter crash
+- **Problem:** Desktop GUI may not work with certain Python/macOS combinations
+- **Solution 1 (Recommended):** Use the web interface:
+  ```bash
+  python app.py
+  # Then open http://localhost:5000
+  ```
+- **Solution 2:** Upgrade Python using pyenv:
+  ```bash
+  pyenv install 3.11.0
+  pyenv local 3.11.0
+  python -m venv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+  ```
+
 ---
 
 ## ⚙️ Configuration
 
 Want to like videos from a different channel? Easy! 🎯
 
-Edit `username.py` and change line 20:
+Just enter any channel handle in the GUI or web interface:
+- `@pewdiepie`
+- `@mrbeast`
+- `@any_channel_you_want`
 
-```python
-channel_username = "@your_channel_name"
-```
+The app will automatically find and like all videos from that channel!
 
 ---
 
@@ -194,6 +252,15 @@ channel_username = "@your_channel_name"
 
 ## 🤝 Contributing
 
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+Areas we'd love help with:
+- 🧪 Unit tests
+- 🎨 UI improvements
+- 📝 Documentation
+- 🐛 Bug fixes
+- ✨ New features
+
 Feel free to fork this project and make it even better! 🌟
 
 ---
@@ -208,6 +275,8 @@ Feel free to fork this project and make it even better! 🌟
 ---
 
 ## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 Use this project however you want! Just be responsible! 🐹💕
 
