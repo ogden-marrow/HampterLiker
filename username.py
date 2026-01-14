@@ -1,5 +1,5 @@
 import googleapiclient.discovery
-from liker import get_authenticated_service, get_channel_videos
+from liker import get_authenticated_service, get_channel_videos, like_videos
 
 
 def get_channel_id(youtube, username):
@@ -21,8 +21,17 @@ def main():
     channel_id = get_channel_id(youtube, channel_username)
 
     if channel_id:
+        print(f"Channel ID found: {channel_id}")
+        print("Fetching all videos from the channel...")
         video_ids = get_channel_videos(youtube, channel_id)
-        print("Video IDs retrieved:", video_ids)
+        print(f"Found {len(video_ids)} videos.")
+
+        print("Starting to like all videos...")
+        like_videos(youtube, video_ids)
+        print("Finished liking all videos!")
     else:
         print("Channel ID not found for the given username.")
-main()
+
+
+if __name__ == "__main__":
+    main()

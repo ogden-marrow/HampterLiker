@@ -2,10 +2,22 @@ import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
 from google.oauth2.credentials import Credentials
+import glob
+import os
 
-# Get your OAuth 2.0 client secrets file from the Google Developer Console
+# Automatically find any client_secret_*.json file in the current directory
+client_secret_files = glob.glob("client_secret_*.json")
 
-client_secrets_file = "client_secret_308678656389-9iggfmqfvbh3rh2d5ssg5l4k99fu2468.apps.googleusercontent.com.json"
+if not client_secret_files:
+    raise FileNotFoundError(
+        "No client_secret_*.json file found in the current directory. "
+        "Please download your OAuth 2.0 credentials from Google Cloud Console "
+        "and place them in this directory."
+    )
+
+# Use the first client_secret file found
+client_secrets_file = client_secret_files[0]
+print(f"Using credentials file: {client_secrets_file}")
 
 scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 api_service_name = "youtube"
