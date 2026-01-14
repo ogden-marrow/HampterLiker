@@ -1,17 +1,3 @@
-# HampterLiker
- Like the Hampter Channel
-
-Creating a script to like every video on a YouTube channel requires using the YouTube Data API. Before you start, make sure you have a Google account and a project set up in the Google Developer Console. Enable the YouTube Data API v3 for your project and get your API key.
-
-Then, you'll need to install Google API Client Library for Python if you haven't already:
-
-```bash
-pip install google-api-python-client
-```
-
-Now you can create a Python script to like every video on a YouTube channel:
-
-```python
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
@@ -19,16 +5,19 @@ from google.oauth2.credentials import Credentials
 
 # Get your OAuth 2.0 client secrets file from the Google Developer Console
 
-client_secrets_file = "path/to/your/client_secrets.json"
+client_secrets_file = "client_secret_308678656389-9iggfmqfvbh3rh2d5ssg5l4k99fu2468.apps.googleusercontent.com.json"
 
 scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 api_service_name = "youtube"
 api_version = "v3"
 
+
 def get_authenticated_service():
-    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(client_secrets_file, scopes)
-    credentials = flow.run_console()
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        client_secrets_file, scopes)
+    credentials = flow.run_local_server(port=0)
     return googleapiclient.discovery.build(api_service_name, api_version, credentials=credentials)
+
 
 def get_channel_videos(youtube, channel_id):
     all_videos = []
@@ -52,6 +41,7 @@ def get_channel_videos(youtube, channel_id):
 
     return all_videos
 
+
 def like_videos(youtube, video_ids):
     for video_id in video_ids:
         try:
@@ -60,6 +50,7 @@ def like_videos(youtube, video_ids):
         except googleapiclient.errors.HttpError as error:
             print(f"An error occurred: {error}")
             print(f"Video '{video_id}' could not be liked.")
+
 
 def main():
     youtube = get_authenticated_service()
@@ -70,9 +61,6 @@ def main():
 
     like_videos(youtube, video_ids)
 
+
 if __name__ == "__main__":
     main()
-    ```
-Replace CHANNEL_ID with the actual ID of the YouTube channel you want to like videos from. Also, make sure to provide the correct path to your client_secrets.json file. Run the script, and it will ask you to authenticate using OAuth 2.0. Once authenticated, it will start liking all videos on the specified channel.
-
-Note that this script and the action of automatically liking videos might violate YouTube's Terms of Service. Please use this script responsibly and for educational purposes only.
